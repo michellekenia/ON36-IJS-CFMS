@@ -4,17 +4,12 @@ export enum TipoConta {
 }
 
 export class Conta {
-    numeroConta: string
-    agencia: string
-    contaId: number
     clienteId: number
     saldo: number
     tipo: TipoConta
+    id: number
 
     constructor(numeroConta: string, agencia: string, contaId: number, saldo: number, clienteId: number, tipo: TipoConta) {
-        this.numeroConta = numeroConta
-        this.agencia = agencia
-        this.contaId = contaId
         this.clienteId = clienteId
         this.saldo = saldo
         this.tipo = tipo 
