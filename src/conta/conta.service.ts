@@ -8,8 +8,8 @@ import { Conta, TipoConta } from './conta.model';
 export class ContaService {
 
     //Metodo para leitura dos arquivos json
-    private readonly filePath = path.resolve('src\conta\conta.json')
-    private readonly clienteFilePath = path.resolve('src\cliente\clientes.json')
+    private readonly filePath = path.resolve('src/conta/conta.json')
+    private readonly clienteFilePath = path.resolve('src/cliente/clientes.json')
 
     private lerContas(): Conta[] {
         const data = fs.readFileSync(this.filePath, 'utf8')
@@ -35,6 +35,7 @@ export class ContaService {
             tipo,
             clienteId
         }
+
 
         const clientes = this.lerClientes()
         const cliente = clientes.find((cliente) => cliente.id === clienteId)
@@ -63,22 +64,22 @@ export class ContaService {
     }
 
     //Metodo para alterar o tipo de conta
-    alterarTipoConta(id:number, tipo:TipoConta): Conta {
+    alterarTipoConta(id: number, tipo: TipoConta): Conta {
         const contas = this.lerContas()
         const conta = contas.find((conta) => conta.id === (id))
 
-        if(!conta) {
-            throw new NotFoundException('Conta não encontrada.')   
+        if (!conta) {
+            throw new NotFoundException('Conta não encontrada.')
         }
 
         conta.tipo = tipo
         this.escreverContas(contas)
         return conta
-        
+
     }
 
-      //Metodo para alterar o saldo
-      alterarSaldo(id: number, novoSaldo: number): Conta {
+    //Metodo para alterar o saldo
+    alterarSaldo(id: number, novoSaldo: number): Conta {
         const contas = this.lerContas()
         const conta = contas.find(conta => conta.id === id)
 
@@ -86,7 +87,7 @@ export class ContaService {
         this.escreverContas(contas)
         return conta
 
-      }
+    }
 
     //Metodo para remover uma conta
     removerConta(id: number): void {

@@ -9,9 +9,10 @@ export class Conta {
     tipo: TipoConta
     id: number
 
-    constructor(numeroConta: string, agencia: string, contaId: number, saldo: number, clienteId: number, tipo: TipoConta) {
+    constructor(clienteId: number, saldo: number, tipo: TipoConta, id: number) {
         this.clienteId = clienteId
         this.saldo = saldo
-        this.tipo = tipo 
+        this.tipo = tipo
+        this.id = id
     }
 }

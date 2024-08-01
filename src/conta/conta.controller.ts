@@ -5,12 +5,12 @@ import { Conta, TipoConta } from './conta.model';
 @Controller('conta')
 export class ContaController {
 
-    constructor(private readonly contaService: ContaService) { }
+    constructor(private readonly contaService: ContaService) {}
 
     @Post()
     criarConta(@Body('clienteId') clienteId: number, @Body('saldo') saldo: number, @Body('tipo') tipo: TipoConta): Conta {
         return this.contaService.criarConta(clienteId, saldo, tipo)
-     }
+    }
 
 
     @Get()
