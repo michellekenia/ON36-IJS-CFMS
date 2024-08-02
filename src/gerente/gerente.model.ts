@@ -5,8 +5,9 @@ export class Gerente {
     id: number
     clientes: Cliente[] = []
 
-    constructor(nome: string, id: number){
+    constructor(nome: string, id: number, clientes: Cliente[]){
         this.nome = nome
-        this.id = id
+        this.id = id,
+        this.clientes = clientes
     }
 }

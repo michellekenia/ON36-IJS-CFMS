@@ -1,5 +1,5 @@
 import { Cliente } from 'src/cliente/cliente.model';
-import { Injectable, NotFoundException, Post } from '@nestjs/common';
+import { Injectable, NotFoundException} from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs';
 import { Conta } from 'src/conta/conta.model';
@@ -14,8 +14,8 @@ export class ClienteService {
     }
 
 
-    private escreverCliente(clients: Cliente[]): void {
-        fs.writeFileSync(this.filePath, JSON.stringify(clients, null, 2), 'utf8');
+    private escreverCliente(clientes: Cliente[]): void {
+        fs.writeFileSync(this.filePath, JSON.stringify(clientes, null, 2), 'utf8');
     }
 
     criarCliente(nome: string, endereco: string, telefone: string, gerenteId: number, contas: Conta[] = []): Cliente {
