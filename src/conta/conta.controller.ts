@@ -12,7 +12,6 @@ export class ContaController {
         return this.contaService.criarConta(clienteId, saldo, tipo)
     }
 
-
     @Get()
     findAll(): Conta[] {
         return this.contaService.findAll()
@@ -24,8 +23,8 @@ export class ContaController {
     }
 
     @Patch(':id/conta')
-    alterarTipoConta(@Param('id') id: number, @Body('tipoConta') tipoConta: TipoConta): Conta {
-        return this.contaService.alterarTipoConta(id, tipoConta)
+    alterarTipoConta(@Param('id') id: number, @Body('tipo') tipo: TipoConta): Conta {
+        return this.contaService.alterarTipoConta(id, tipo)
     }
 
     @Patch(':id/saldo')

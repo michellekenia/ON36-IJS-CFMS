@@ -38,7 +38,7 @@ export class ContaService {
 
 
         const clientes = this.lerClientes()
-        const cliente = clientes.find((cliente) => cliente.id === clienteId)
+        const cliente = clientes.find((cliente) => cliente.clienteId === clienteId)
         if (!cliente) {
             throw new NotFoundException('Cliente não encontrado.')
         }
@@ -56,7 +56,7 @@ export class ContaService {
     //Metodo para bucar uma conta por id específico
     findById(id: number): Conta {
         const contas = this.lerContas()
-        const conta = contas.find(conta => conta.id === id)
+        const conta = contas.find(conta => conta.id === Number(id))
         if (!conta) {
             throw new NotFoundException(`Conta de id ${id} não encontrada`)
         }
@@ -66,7 +66,7 @@ export class ContaService {
     //Metodo para alterar o tipo de conta
     alterarTipoConta(id: number, tipo: TipoConta): Conta {
         const contas = this.lerContas()
-        const conta = contas.find((conta) => conta.id === (id))
+        const conta = contas.find((conta) => conta.id === Number(id))
 
         if (!conta) {
             throw new NotFoundException('Conta não encontrada.')
