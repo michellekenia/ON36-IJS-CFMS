@@ -17,7 +17,7 @@ export class ContaController {
         return this.contaService.findAll()
     }
 
-    @Get(':id')
+    @Get(':id/buscar')
     findById(@Param('id') id: number): Conta {
         return this.contaService.findById(id)
     }
@@ -32,7 +32,7 @@ export class ContaController {
         return this.contaService.alterarSaldo(id, novoSaldo)
     }
 
-    @Delete(':id')
+    @Delete(':id/deletar')
     removerconta(@Param('id', ParseIntPipe) id: number): void {
         return this.contaService.removerConta(id)
     }

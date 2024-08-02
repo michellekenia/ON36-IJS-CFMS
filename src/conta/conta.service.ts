@@ -81,7 +81,7 @@ export class ContaService {
     //Metodo para alterar o saldo
     alterarSaldo(id: number, novoSaldo: number): Conta {
         const contas = this.lerContas()
-        const conta = contas.find(conta => conta.id === id)
+        const conta = contas.find(conta => conta.id === Number(id))
 
         conta.saldo = novoSaldo
         this.escreverContas(contas)
