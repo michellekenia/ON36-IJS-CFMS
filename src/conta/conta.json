@@ -1,0 +1,31 @@
+[
+  {
+    "id": 3,
+    "saldo": 10,
+    "clienteId": 3,
+    "tipo": "poupanca"
+  },
+  {
+    "id": 4,
+    "saldo": 200,
+    "tipo": "poupanca",
+    "clienteId": 5
+  },
+  {
+    "id": 5,
+    "saldo": 1,
+    "tipo": "poupanca",
+    "clienteId": 1
+  },
+  {
+    "id": 6,
+    "saldo": 40,
+    "tipo": "poupanca",
+    "clienteId": 1
+  },
+  {
+    "id": 7,
+    "saldo": 40,
+    "clienteId": 1
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "clienteId": 1,
+    "nome": "Mariana",
+    "endereco": "Rua das esquinas",
+    "telefone": "1111-1111",
+    "contas": [],
+    "gerenteId": 10
+  }
+]
