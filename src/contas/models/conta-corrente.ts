@@ -4,5 +4,6 @@ import { Conta } from "./conta.interface";
 export class ContaCorrente implements Conta {
     tipo: TipoConta.corrente;
 
-    constructor(public clienteId: number, public saldo: number, public id: number) {}
+
+    constructor(public id: number, public saldo: number, public clienteId: number) {}
 }
