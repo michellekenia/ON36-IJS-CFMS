@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { GerenteService } from './gerente.service';
-import { Gerente } from './gerente.model';
-import { Cliente } from 'src/cliente/cliente.model';
+import { Gerente } from './models/gerente';
+import { Cliente } from 'src/clientes/models/cliente.interface';
 
 @Controller('gerentes')
 export class GerenteController {
 
-    constructor(private readonly gerenteService: GerenteService) {}
+    constructor(private readonly gerenteService: GerenteService) { }
 
     @Post()
     criarGerente(@Body('nome') nome: string, @Body('clientes') clientes: Cliente[]): Gerente {
@@ -14,13 +14,13 @@ export class GerenteController {
     }
 
     @Get()
-    findAll(): Gerente[] {
-        return this.gerenteService.findAll()
+    buscarTodos(): Gerente[] {
+        return this.gerenteService.buscarTodos()
     }
 
     @Get(':id/buscar')
-    findById(@Param('id') id: number): Gerente {
-        return this.gerenteService.findById(id)
+    buscarPorId(@Param('id') id: number): Gerente {
+        return this.gerenteService.buscarPorId(id)
     }
 
     @Patch(':id/alterar')

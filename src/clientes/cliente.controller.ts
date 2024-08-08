@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { ClienteService } from './cliente.service';
-import { Cliente } from './cliente.model';
-import { Conta } from 'src/conta/conta.model';
+import { Cliente } from './models/cliente.interface';
+import { Conta } from 'src/contas/models/conta.interface';
 
 
 @Controller('clientes')
@@ -21,13 +21,13 @@ export class ClienteController {
     }
 
     @Get()
-    findAll(): Cliente[] {
-        return this.clienteService.findAll()
+    buscarTodos(): Cliente[] {
+        return this.clienteService.buscarTodos()
     }
 
     @Get(':id/buscar')
-    findById(@Param('id') id: number): Cliente {
-        return this.clienteService.findById(id)
+    buscarPorId(@Param('id') id: number): Cliente {
+        return this.clienteService.buscarPorId(id)
     }
 
     @Patch(':id/alterar')
@@ -36,7 +36,7 @@ export class ClienteController {
     }
 
     @Delete(':id/deletar')
-    removerconta(@Param('id', ParseIntPipe) clienteId: number): void {
+    removerCliente(@Param('id', ParseIntPipe) clienteId: number): void {
         return this.clienteService.removerCliente(clienteId)
     }
 

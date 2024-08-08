@@ -1,8 +1,8 @@
-import { Cliente } from 'src/cliente/cliente.model';
-import { Injectable, NotFoundException} from '@nestjs/common';
+import { Cliente } from 'src/clientes/models/cliente.interface';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs';
-import { Conta } from 'src/conta/conta.model';
+import { Conta } from 'src/contas/models/conta.interface';
 
 @Injectable()
 export class ClienteService {
@@ -36,11 +36,11 @@ export class ClienteService {
 
     }
 
-    findAll(): Cliente[] {
+    buscarTodos(): Cliente[] {
         return this.lerClientes()
     }
 
-    findById(id: number): Cliente {
+    buscarPorId(id: number): Cliente {
         const clientes = this.lerClientes()
         const cliente = clientes.find((cliente) => cliente.clienteId === Number(id))
         if (!cliente) {

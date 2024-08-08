@@ -1,13 +1,13 @@
-import { Cliente } from 'src/cliente/cliente.model';
+import { Cliente } from 'src/clientes/models/cliente.interface';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs'
-import { Conta, TipoConta } from './conta.model';
+import { Conta } from './models/conta.interface';
+import { TipoConta } from './enums/tipo-conta.enum';
 
 @Injectable()
 export class ContaService {
 
-    //Metodo para leitura dos arquivos json
     private readonly filePath = path.resolve('src/conta/conta.json')
     private readonly clienteFilePath = path.resolve('src/cliente/clientes.json')
 
@@ -25,8 +25,6 @@ export class ContaService {
         return JSON.parse(data) as Cliente[]
     }
 
-
-    //Metodo para criar uma conta
     criarConta(clienteId: number, saldo: number, tipo: TipoConta): Conta {
         const contas = this.lerContas()
         const novaConta = {
@@ -35,7 +33,6 @@ export class ContaService {
             tipo,
             clienteId
         }
-
 
         const clientes = this.lerClientes()
         const cliente = clientes.find((cliente) => cliente.clienteId === clienteId)
@@ -48,13 +45,11 @@ export class ContaService {
         return novaConta
     }
 
-    //Metodo para bucar todas as contas
-    findAll(): Conta[] {
+    buscarTodos(): Conta[] {
         return this.lerContas()
     }
 
-    //Metodo para bucar uma conta por id específico
-    findById(id: number): Conta {
+    buscarPorId(id: number): Conta {
         const contas = this.lerContas()
         const conta = contas.find(conta => conta.id === Number(id))
         if (!conta) {
@@ -63,7 +58,6 @@ export class ContaService {
         return conta
     }
 
-    //Metodo para alterar o tipo de conta
     alterarTipoConta(id: number, tipo: TipoConta): Conta {
         const contas = this.lerContas()
         const conta = contas.find((conta) => conta.id === Number(id))
@@ -78,7 +72,6 @@ export class ContaService {
 
     }
 
-    //Metodo para alterar o saldo
     alterarSaldo(id: number, novoSaldo: number): Conta {
         const contas = this.lerContas()
         const conta = contas.find(conta => conta.id === Number(id))
@@ -89,7 +82,6 @@ export class ContaService {
 
     }
 
-    //Metodo para remover uma conta
     removerConta(id: number): void {
         const contas = this.lerContas()
         const contasIndex = contas.findIndex(conta => conta.id === id)

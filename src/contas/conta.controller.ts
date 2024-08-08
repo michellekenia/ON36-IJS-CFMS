@@ -1,11 +1,13 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { ContaService } from './conta.service';
-import { Conta, TipoConta } from './conta.model';
+import { Conta } from './models/conta.interface';
+import { TipoConta } from './enums/tipo-conta.enum';
+
 
 @Controller('conta')
 export class ContaController {
 
-    constructor(private readonly contaService: ContaService) {}
+    constructor(private readonly contaService: ContaService) { }
 
     @Post()
     criarConta(@Body('clienteId') clienteId: number, @Body('saldo') saldo: number, @Body('tipo') tipo: TipoConta): Conta {
@@ -13,13 +15,13 @@ export class ContaController {
     }
 
     @Get()
-    findAll(): Conta[] {
-        return this.contaService.findAll()
+    buscarTodos(): Conta[] {
+        return this.contaService.buscarTodos()
     }
 
     @Get(':id/buscar')
-    findById(@Param('id') id: number): Conta {
-        return this.contaService.findById(id)
+    buscarPorId(@Param('id') id: number): Conta {
+        return this.contaService.buscarPorId(id)
     }
 
     @Patch(':id/conta')
