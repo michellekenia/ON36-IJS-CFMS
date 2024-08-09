@@ -1,15 +1,17 @@
-import { Cliente } from 'src/clientes/models/cliente.interface';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs'
-import { Conta } from './models/conta.interface';
 import { TipoConta } from './enums/tipo-conta.enum';
 import { ContaFabrica, TConta } from './fabricas/conta.fabrica';
+import { TCliente } from 'src/clientes/fabricas/cliente.fabrica';
 
 @Injectable()
 export class ContaService {
-
     contaFabrica: ContaFabrica
+    constructor (contaFabrica: ContaFabrica){
+        this.contaFabrica = contaFabrica
+    }
+    
 
 
     private readonly filePath = path.resolve('src/contas/data/contas.json')
@@ -24,9 +26,9 @@ export class ContaService {
         fs.writeFileSync(this.filePath, JSON.stringify(contas, null, 2), 'utf8')
     }
 
-    private lerClientes(): Cliente[] {
+    private lerClientes(): TCliente[] {
         const data = fs.readFileSync(this.clienteFilePath, 'utf8')
-        return JSON.parse(data) as Cliente[]
+        return JSON.parse(data) as TCliente[]
     }
     
     criarConta(tipo: TipoConta, clienteId: number, saldo: number, id: number): TConta {
@@ -58,7 +60,7 @@ export class ContaService {
         return this.lerContas()
     }
 
-    buscarPorId(id: number): Conta {
+    buscarPorId(id: number): TConta {
         const contas = this.lerContas()
         const conta = contas.find(conta => conta.id === Number(id))
         if (!conta) {
