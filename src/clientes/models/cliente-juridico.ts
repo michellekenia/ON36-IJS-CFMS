@@ -4,7 +4,7 @@ import { Cliente } from "./cliente.interface";
 
 export class ClienteJuridico implements Cliente {
     gerenteId?: number
-    tipo = TipoCliente.juridico
+    tipo = TipoCliente.pessoaJuridica
     clienteId: number
     contas?: TConta[]
 

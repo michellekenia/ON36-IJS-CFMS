@@ -9,11 +9,11 @@ export class ClienteFabrica {
     criarCliente(tipo: TipoCliente, nome: string, endereco: string, telefone: string): TCliente {
 
         switch (tipo) {
-            case TipoCliente.fisico:
+            case TipoCliente.pessoaFisica:
                 const clienteFisico = new ClienteFisico(nome, endereco, telefone)
                 return clienteFisico
 
-            case TipoCliente.juridico:
+            case TipoCliente.pessoaJuridica:
                 const clienteJuridico = new ClienteJuridico(nome, endereco, telefone)
                 return clienteJuridico
 

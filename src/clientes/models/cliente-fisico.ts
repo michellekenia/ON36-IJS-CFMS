@@ -5,7 +5,7 @@ import { TConta } from "src/contas/fabricas/conta.fabrica";
 
 export class ClienteFisico implements Cliente {
     gerenteId?: number
-    tipo = TipoCliente.fisico
+    tipo = TipoCliente.pessoaFisica
     clienteId: number
     contas?: TConta[]
 
