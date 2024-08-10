@@ -12,11 +12,9 @@ export class ClienteFabrica {
             case TipoCliente.pessoaFisica:
                 const clienteFisico = new ClienteFisico(nome, endereco, telefone)
                 return clienteFisico
-
             case TipoCliente.pessoaJuridica:
                 const clienteJuridico = new ClienteJuridico(nome, endereco, telefone)
                 return clienteJuridico
-
             default:
                 throw new Error('Tipo de cliente inválido.')
         }

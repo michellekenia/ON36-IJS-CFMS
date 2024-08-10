@@ -6,17 +6,14 @@ import { TipoConta } from "../enums/tipo-conta.enum";
 @Injectable()
 export class ContaFabrica {
 
-    criarConta(tipo: TipoConta, clienteId: number, id: number, saldo: number): ContaCorrente | ContaPoupanca {
+    criarConta(tipo: TipoConta, saldo: number, clienteId: number): TConta {
 
         switch (tipo) {
             case TipoConta.corrente:
-                const contaCorrente = new ContaCorrente(id, saldo, clienteId)
-                contaCorrente.saldo = 0
+                const contaCorrente = new ContaCorrente(saldo, clienteId)
                 return contaCorrente
-
             case TipoConta.poupanca:
-                const contaPoupanca = new ContaPoupanca(id, saldo, clienteId)
-                contaPoupanca.saldo = 0
+                const contaPoupanca = new ContaPoupanca(saldo, clienteId)
                 return contaPoupanca
 
             default:

@@ -2,8 +2,9 @@ import { TipoConta } from "../enums/tipo-conta.enum";
 import { Conta } from "./conta.interface";
 
 export class ContaPoupanca implements Conta {
-    tipo: TipoConta.poupanca;
+    tipo = TipoConta.poupanca
+    id: number
 
-
-    constructor(public id: number, public saldo: number, public clienteId: number) {}
+    constructor(public saldo: number, public clienteId: number) {
+    }
 }

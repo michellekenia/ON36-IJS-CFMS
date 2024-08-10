@@ -5,14 +5,14 @@ import { TipoConta } from './enums/tipo-conta.enum';
 import { ContaFabrica, TConta } from './fabricas/conta.fabrica';
 import { TCliente } from 'src/clientes/fabricas/cliente.fabrica';
 
+
 @Injectable()
 export class ContaService {
+
     contaFabrica: ContaFabrica
-    constructor (contaFabrica: ContaFabrica){
+    constructor(contaFabrica: ContaFabrica) {
         this.contaFabrica = contaFabrica
     }
-    
-
 
     private readonly filePath = path.resolve('src/contas/data/contas.json')
     private readonly clienteFilePath = path.resolve('src/clientes/data/clientes.json')
@@ -27,25 +27,23 @@ export class ContaService {
     }
 
     private lerClientes(): TCliente[] {
-        const data = fs.readFileSync(this.clienteFilePath, 'utf8')
-        return JSON.parse(data) as TCliente[]
+        const data = fs.readFileSync(this.clienteFilePath, 'utf8');
+        return JSON.parse(data) as TCliente[];
     }
-    
-    criarConta(tipo: TipoConta, clienteId: number, saldo: number, id: number): TConta {
+
+    criarConta(tipo: TipoConta, saldo: number, clienteId: number): TConta {
         this.verificarIdCliente(clienteId)
-        const novaConta = this.contaFabrica.criarConta(tipo, clienteId, saldo, id)
+        const novaConta = this.contaFabrica.criarConta(tipo, saldo, clienteId)
         return this.adicionarListaContas(novaConta)
     }
 
-    verificarIdCliente(clienteId: number) {
-        if(clienteId <= 0){
-            throw new Error('Id do cliente inválido.')
-        }
+    verificarIdCliente(clienteId: number): TCliente {
         const clientes = this.lerClientes()
-        const cliente = clientes.find((cliente) => cliente.clienteId === clienteId)
+        const cliente = clientes.find((cliente) => cliente.clienteId === Number(clienteId))
         if (!cliente) {
-            throw new NotFoundException('Cliente não encontrado.')
+            throw new NotFoundException(`Cliente ${clienteId} não encontrado.`)
         }
+        return cliente
     }
 
     adicionarListaContas(conta: TConta) {
@@ -69,7 +67,7 @@ export class ContaService {
         return conta
     }
 
-    alterarTipoConta(id: number, tipo: TipoConta): TConta {
+    alterarTipoConta(id: number, novoTipo: TipoConta): TConta {
         const contas = this.lerContas()
         const conta = contas.find((conta) => conta.id === Number(id))
 
@@ -77,7 +75,7 @@ export class ContaService {
             throw new NotFoundException('Conta não encontrada.')
         }
 
-        conta.tipo = tipo
+        conta.tipo = novoTipo
         this.escreverContas(contas)
         return conta
 
@@ -87,7 +85,7 @@ export class ContaService {
         const contas = this.lerContas()
         const conta = contas.find(conta => conta.id === Number(id))
 
-        conta.saldo = novoSaldo   
+        conta.saldo = novoSaldo
         this.escreverContas(contas)
         return conta
 

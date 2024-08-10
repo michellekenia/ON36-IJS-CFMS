@@ -1,8 +1,9 @@
+import { TipoCliente } from "src/clientes/enums/tipo-cliente.enum"
 import { TipoConta } from "../enums/tipo-conta.enum"
 
 export interface Conta {
-    clienteId: number
-    saldo: number
     tipo: TipoConta
-    id: number
+    saldo: number
+    id: number,
+    clienteId: number
 } 

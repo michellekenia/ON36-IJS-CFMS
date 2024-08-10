@@ -29,7 +29,7 @@ export class ClienteService {
         return this.adicionarListaClientes(novoCliente)
     }
 
-    adicionarListaClientes(cliente: TCliente) {
+    adicionarListaClientes(cliente: TCliente): TCliente {
         const clientes = this.lerClientes()
         cliente.clienteId = clientes.length > 0 ? clientes[clientes.length - 1].clienteId + 1 : 1
         clientes.push(cliente)
