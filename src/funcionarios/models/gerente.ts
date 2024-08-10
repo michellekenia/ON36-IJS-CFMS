@@ -4,9 +4,10 @@ import { Funcionario } from "./funcionario.interface";
 
 export class Gerente implements Funcionario {
     tipo = TipoFuncionario.gerente
-    clientes: Cliente[] = []
+    clientes?: Cliente[]
+    id: number
     
-    constructor (public nome: string, public id: number) {
+    constructor (public nome: string) {
 
     }
 }

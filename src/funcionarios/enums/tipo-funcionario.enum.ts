@@ -1,3 +1,4 @@
 export enum TipoFuncionario {
-    gerente = 'gerente'
+    gerente = 'gerente',
+    atendente = 'atendente'
 }
