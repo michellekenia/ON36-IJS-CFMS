@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { ClienteService } from './cliente.service';
-import { Cliente } from './cliente.model';
-import { Conta } from 'src/conta/conta.model';
+import { TipoCliente } from './enums/tipo-cliente.enum';
+import { TCliente } from './fabricas/cliente.fabrica';
 
 
 @Controller('clientes')
@@ -10,33 +10,33 @@ export class ClienteController {
 
     @Post()
     criarCliente(
+        @Body('tipo') tipo: TipoCliente,
         @Body('nome') nome: string,
         @Body('endereco') endereco: string,
         @Body('telefone') telefone: string,
         @Body('gerenteId') gerenteId: number,
-        @Body('contas') contas: Conta[]
-    ): Cliente {
-        return this.clienteService.criarCliente(nome, endereco, telefone, gerenteId, contas)
+    ): TCliente {
+        return this.clienteService.criarCliente(tipo, nome, endereco, telefone, gerenteId)
 
     }
 
     @Get()
-    findAll(): Cliente[] {
-        return this.clienteService.findAll()
+    buscarTodos(): TCliente[] {
+        return this.clienteService.buscarTodos()
     }
 
     @Get(':id/buscar')
-    findById(@Param('id') id: number): Cliente {
-        return this.clienteService.findById(id)
+    buscarPorId(@Param('id') id: number): TCliente {
+        return this.clienteService.buscarPorId(id)
     }
 
     @Patch(':id/alterar')
-    alterarDadosClinte(@Param('id') id: number, @Body('nome') novoNome: string, @Body('endereco') novoEndereco: string, @Body('telefone') novoTelefone: string): Cliente {
+    alterarDadosClinte(@Param('id') id: number, @Body('nome') novoNome: string, @Body('endereco') novoEndereco: string, @Body('telefone') novoTelefone: string): TCliente {
         return this.clienteService.alterarDadosClinte(id, novoNome, novoEndereco, novoTelefone)
     }
 
     @Delete(':id/deletar')
-    removerconta(@Param('id', ParseIntPipe) clienteId: number): void {
+    removerCliente(@Param('id', ParseIntPipe) clienteId: number): void {
         return this.clienteService.removerCliente(clienteId)
     }
 

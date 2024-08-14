@@ -1,46 +1,47 @@
-import { Cliente } from 'src/cliente/cliente.model';
-import { Injectable, NotFoundException} from '@nestjs/common';
+import { TipoCliente } from './enums/tipo-cliente.enum';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs';
-import { Conta } from 'src/conta/conta.model';
+import { ClienteFabrica, TCliente } from './fabricas/cliente.fabrica';
 
 @Injectable()
 export class ClienteService {
-    private readonly filePath = path.resolve('src/cliente/clientes.json')
 
-    private lerClientes(): Cliente[] {
+    clienteFabrica: ClienteFabrica
+    constructor(clienteFabrica: ClienteFabrica) {
+        this.clienteFabrica = clienteFabrica
+    }
+
+    private readonly filePath = path.resolve('src/clientes/data/clientes.json')
+
+    private lerClientes(): TCliente[] {
         const data = fs.readFileSync(this.filePath, 'utf8');
-        return JSON.parse(data) as Cliente[];
+        return JSON.parse(data) as TCliente[];
     }
 
 
-    private escreverCliente(clientes: Cliente[]): void {
+    private escreverCliente(clientes: TCliente[]): void {
         fs.writeFileSync(this.filePath, JSON.stringify(clientes, null, 2), 'utf8');
     }
 
-    criarCliente(nome: string, endereco: string, telefone: string, gerenteId: number, contas: Conta[] = []): Cliente {
-        const clientes = this.lerClientes()
-        const novoCliente: Cliente = {
-            clienteId:
-                clientes.length > 0 ? clientes[clientes.length - 1].clienteId + 1 : 1,
-            nome,
-            endereco,
-            telefone,
-            gerenteId,
-            contas
-        }
-
-        clientes.push(novoCliente)
-        this.escreverCliente(clientes)
-        return novoCliente
-
+    criarCliente(tipo: TipoCliente, nome: string, endereco: string, telefone: string, gerenteId: number): TCliente {
+        const novoCliente = this.clienteFabrica.criarCliente(tipo, nome, endereco, telefone)
+        return this.adicionarListaClientes(novoCliente)
     }
 
-    findAll(): Cliente[] {
+    adicionarListaClientes(cliente: TCliente): TCliente {
+        const clientes = this.lerClientes()
+        cliente.clienteId = clientes.length > 0 ? clientes[clientes.length - 1].clienteId + 1 : 1
+        clientes.push(cliente)
+        this.escreverCliente(clientes)
+        return cliente
+    }
+
+    buscarTodos(): TCliente[] {
         return this.lerClientes()
     }
 
-    findById(id: number): Cliente {
+    buscarPorId(id: number): TCliente {
         const clientes = this.lerClientes()
         const cliente = clientes.find((cliente) => cliente.clienteId === Number(id))
         if (!cliente) {
@@ -49,7 +50,7 @@ export class ClienteService {
         return cliente
     }
 
-    alterarDadosClinte(id: number, novoNome: string, novoEndereco: string, novoTelefone: string): Cliente {
+    alterarDadosClinte(id: number, novoNome: string, novoEndereco: string, novoTelefone: string): TCliente {
         const clientes = this.lerClientes()
         const cliente = clientes.find(cliente => cliente.clienteId === Number(id))
 
