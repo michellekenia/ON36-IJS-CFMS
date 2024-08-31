@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "nome": "Jessica",
+    "endereco": "Rua Nerd",
+    "telefone": "666",
+    "tipo": "PF",
+    "contas": [],
+    "gerenteId": null,
+    "clienteId": 1
+  },
+  {
+    "nome": "Louie",
+    "endereco": "Rua Fofa",
+    "telefone": "5555-5555",
+    "tipo": "PF",
+    "contas": [],
+    "gerenteId": null,
+    "clienteId": 2
+  }
+]

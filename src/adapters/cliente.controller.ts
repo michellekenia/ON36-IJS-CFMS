@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { CreateClienteDto } from 'src/application/dto/cliente/create-cliente.dto';
 import { ClienteService } from 'src/application/services/cliente.service';
-import { TipoCliente } from 'src/domain/enums/tipo-cliente.enum';
+
 import { TCliente } from 'src/domain/factories/cliente.fabrica';
 
 @Controller('clientes')
@@ -8,33 +9,30 @@ export class ClienteController {
     constructor(private readonly clienteService: ClienteService) { }
 
     @Post()
-    criarCliente(
-        @Body('tipo') tipo: TipoCliente,
-        @Body('nome') nome: string,
-        @Body('endereco') endereco: string,
-        @Body('telefone') telefone: string): TCliente {
-        return this.clienteService.criarCliente(tipo, nome, endereco, telefone)
+    async criarCliente(
+        @Body() clienteDto: CreateClienteDto): Promise <TCliente> {
+        return this.clienteService.criarCliente(clienteDto)
 
     }
 
     @Get()
-    buscarTodos(): TCliente[] {
+    async buscarTodos(): Promise<TCliente[]> {
         return this.clienteService.buscarTodos()
     }
 
     @Get(':id/buscar')
-    buscarPorId(@Param('id') id: number): TCliente {
+    async buscarPorId(@Param('id') id: number): Promise<TCliente> {
         return this.clienteService.buscarPorId(id)
     }
 
     @Patch(':id/alterar')
-    alterarDadosClinte(@Param('id') id: number, @Body('nome') novoNome: string, @Body('endereco') novoEndereco: string, @Body('telefone') novoTelefone: string): TCliente {
-        return this.clienteService.alterarDadosClinte(id, novoNome, novoEndereco, novoTelefone)
+    async alterarDadosClinte(@Param('id') id: number, @Body() clienteDto: CreateClienteDto): Promise <TCliente> {
+        return this.clienteService.alterarDadosClinte(id, clienteDto)
     }
 
     @Delete(':id/deletar')
-    removerCliente(@Param('id', ParseIntPipe) clienteId: number): void {
+    async removerCliente(@Param('id', ParseIntPipe) clienteId: number): Promise <void> {
         return this.clienteService.removerCliente(clienteId)
     }
-
+   
 }
