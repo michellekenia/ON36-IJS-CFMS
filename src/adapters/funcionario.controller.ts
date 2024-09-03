@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { CreateFuncionarioDto } from 'src/application/dto/funcionario/create-funcionario.dto';
 import { FuncionarioService } from 'src/application/services/funcionario.service';
-import { TipoFuncionario } from 'src/domain/enums/tipo-funcionario.enum';
 import { TFuncionario } from 'src/domain/factories/funcionario.fabrica';
 
 @Controller('funcionarios')
@@ -9,29 +9,31 @@ export class FuncionarioController {
     constructor(private readonly funcionarioService: FuncionarioService) { }
 
     @Post()
-    criarFuncionario(
-        @Body('tipo') tipo: TipoFuncionario,
-        @Body('nome') nome: string): TFuncionario {
-        return this.funcionarioService.criarFuncionario(tipo, nome)
+    async criarFuncionario(
+        @Body() funcionarioDto: CreateFuncionarioDto): Promise<TFuncionario> {
+        return this.funcionarioService.criarFuncionario(funcionarioDto)
     }
 
     @Get()
-    buscarTodos(): TFuncionario[] {
+    async buscarTodos(): Promise<TFuncionario[]> {
         return this.funcionarioService.buscarTodos()
     }
 
     @Get(':id/buscar')
-    buscarPorId(@Param('id') id: number): TFuncionario {
+    async buscarPorId(
+        @Param('id') id: number): Promise<TFuncionario> {
         return this.funcionarioService.buscarPorId(id)
     }
 
     @Patch(':id/alterar')
-    alterarDadosFuncionario(@Param('id') id: number, @Body('nome') novoNome: string): TFuncionario {
-        return this.funcionarioService.alterarDadosFuncionario(id, novoNome)
+    async alterarDadosFuncionario(
+        @Param('id') id: number, @Body() funcionarioDto: CreateFuncionarioDto): Promise<TFuncionario> {
+        return this.funcionarioService.alterarDadosFuncionario(id, funcionarioDto)
     }
 
     @Delete(':id/deletar')
-    removerFuncionario(@Param('id', ParseIntPipe) id: number): void {
+    async removerFuncionario(
+        @Param('id', ParseIntPipe) id: number): Promise<void> {
         return this.funcionarioService.removerFuncionario(id)
     }
 

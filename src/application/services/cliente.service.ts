@@ -14,10 +14,10 @@ export class ClienteService {
 
     private async lerClientes(): Promise<TCliente[]> {
         try {
-            const data = fs.readFileSync(this.filePath, 'utf8');
-            return JSON.parse(data) as TCliente[];
+            const data = fs.readFileSync(this.filePath, 'utf8')
+            return JSON.parse(data) as TCliente[]
         } catch (error) {
-            console.error("Erro ao ler os clientes:", error);
+            console.error("Erro ao ler os clientes:", error)
             return []
 
         }
@@ -26,22 +26,22 @@ export class ClienteService {
 
     private async escreverCliente(clientes: TCliente[]): Promise<void> {
         try {
-            fs.writeFileSync(this.filePath, JSON.stringify(clientes, null, 2), 'utf8');
+            fs.writeFileSync(this.filePath, JSON.stringify(clientes, null, 2), 'utf8')
         } catch (error) {
-            console.error("Erro ao escrever os clientes:", error);
+            console.error("Erro ao escrever os clientes:", error)
             throw new Error("Não foi possível salvar os clientes.")
         }
     }
 
     private async validarClienteDto(clienteDto: CreateClienteDto): Promise<void> {
-        const erros = await validate(clienteDto);
+        const erros = await validate(clienteDto)
         if (erros.length > 0) {
-            throw new BadRequestException(`Dados inválidos: ${JSON.stringify(erros)}`);
+            throw new BadRequestException(`Dados inválidos: ${JSON.stringify(erros)}`)
         }
     }
 
     private gerarId(cliente: TCliente[]): number {
-        return cliente.length > 0 ? Math.max(...cliente.map(c => c.clienteId)) + 1 : 1;
+        return cliente.length > 0 ? Math.max(...cliente.map(c => c.clienteId)) + 1 : 1
     }
 
     async criarCliente(clienteDto: CreateClienteDto): Promise<TCliente> {

@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { CreateClienteDto } from 'src/application/dto/cliente/create-cliente.dto';
 import { ClienteService } from 'src/application/services/cliente.service';
-
 import { TCliente } from 'src/domain/factories/cliente.fabrica';
 
 @Controller('clientes')
