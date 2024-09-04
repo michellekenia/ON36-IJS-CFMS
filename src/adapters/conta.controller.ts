@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { CreateContaDto } from 'src/application/dto/conta/create-conta.dto';
 import { ContaService } from 'src/application/services/conta.service';
 import { TipoConta } from 'src/domain/enums/tipo-conta.enum';
 import { TConta } from 'src/domain/factories/conta.fabrica';
@@ -9,35 +10,35 @@ export class ContaController {
     constructor(private readonly contaService: ContaService) { }
 
     @Post()
-    criarConta(
-        @Body('tipo') tipo: TipoConta,
-        @Body('saldo') saldo: number,
-        @Body('clienteId') clienteId: number): TConta  {
-        return this.contaService.criarConta(tipo, saldo, clienteId)
+    async criarConta(
+        @Body('clienteId') clienteId: number,
+        @Body() contaDto: CreateContaDto): Promise <TConta>  {
+        return this.contaService.criarConta(clienteId, contaDto)
     }
 
     @Get()
-    buscarTodos(): TConta[] {
+    async buscarTodos(): Promise <TConta[]> {
         return this.contaService.buscarTodos()
     }
 
     @Get(':id/buscar')
-    buscarPorId(@Param('id') id: number): TConta {
+    async buscarPorId(
+        @Param('id') id: number): Promise <TConta> {
         return this.contaService.buscarPorId(id)
     }
 
-    @Patch(':id/tipo')
-    alterarTipoConta(@Param('id') id: number, @Body('tipo') novoTipo: TipoConta): TConta {
-        return this.contaService.alterarTipoConta(id, novoTipo)
-    }
-
-    @Patch(':id/saldo')
-    alterarSaldo(@Param('id') id: number, @Body('saldo') novoSaldo: number): TConta {
-        return this.contaService.alterarSaldo(id, novoSaldo)
+    @Patch(':id/alterar')
+    async alterarConta(
+        @Param('id') id: number, 
+        @Body('tipo') novoTipo: CreateContaDto['tipo'],
+        @Body('saldo') novoSaldo: CreateContaDto['saldo']
+    ): Promise <TConta> {
+        return this.contaService.alterarConta(id, novoTipo, novoSaldo)
     }
 
     @Delete(':id/deletar')
-    removerconta(@Param('id', ParseIntPipe) id: number): void {
+    async removerconta(
+        @Param('id', ParseIntPipe) id: number): Promise <void> {
         return this.contaService.removerConta(id)
     }
 
